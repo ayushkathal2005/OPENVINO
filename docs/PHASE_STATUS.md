@@ -20,8 +20,8 @@
 
 | Phase | Status | Local tests | Commit | Remote verified | User approval |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **00 --- Workspace audit** | READY_FOR_REVIEW | PASS | b50a3b5 | YES | PENDING |
-| **01 --- C++ environment** | NOT_STARTED | --- | --- | --- | --- |
+| **00 --- Workspace audit** | COMPLETE | PASS | b50a3b5 | YES | YES |
+| **01 --- C++ environment** | IN_PROGRESS | --- | --- | --- | --- |
 | **02 --- Model preparation** | NOT_STARTED | --- | --- | --- | --- |
 | **03 --- Local inference** | NOT_STARTED | --- | --- | --- | --- |
 | **04 --- Chat sessions** | NOT_STARTED | --- | --- | --- | --- |
@@ -35,4 +35,5 @@
 
 ## Phase Transition History
 
-- **2026-11-10:** Phase 00 initiated. Workspace isolated, git initialized (`main`), hardware & toolchain audited, verification script implemented. Phase 00 local tests PASS, transitioning to `READY_FOR_REVIEW` pending commit, push, and user approval.
+- **2026-11-10:** Phase 00 completed. Workspace isolated, git initialized (`main`), hardware & toolchain audited, verification script implemented. Phase 00 local tests PASS, push verified on GitHub, user approved. Status: `COMPLETE`.
+- **2026-11-10:** Phase 01 initiated. C++ toolchain & OpenVINO GenAI environment configuration in progress. Status: `IN_PROGRESS`.

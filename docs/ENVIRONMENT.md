@@ -74,3 +74,4 @@
 3. Heavy web frameworks, React dashboards, or distributed microservices.
 4. Multi-agent / vector database / RAG frameworks before completing core requirements.
 5. Committing large model weights, binary dumps, or build artifacts to Git.
+

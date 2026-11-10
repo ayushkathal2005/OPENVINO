@@ -1,6 +1,7 @@
 # Local LLM Inference & Optimization Workbench
 
-[![Phase Status](https://img.shields.io/badge/Phase%2000-READY__FOR__REVIEW-yellow.svg)](docs/PHASE_STATUS.md)
+[![Phase Status](https://img.shields.io/badge/Phase%2000-COMPLETE-brightgreen.svg)](docs/PHASE_STATUS.md)
+[![Phase 01 Status](https://img.shields.io/badge/Phase%2001-IN__PROGRESS-yellow.svg)](docs/PHASE_STATUS.md)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Inference: Local C++](https://img.shields.io/badge/Inference-OpenVINO%20GenAI%20C%2B%2B-green.svg)](docs/ARCHITECTURE.md)
 
@@ -78,8 +79,8 @@ This repository enforces a strict phase-gate protocol. No phase is marked comple
 
 | Phase | Description | Status | Report |
 | :--- | :--- | :--- | :--- |
-| **00** | Workspace audit, Git repository isolation, and contract setup | **READY_FOR_REVIEW** | [PHASE_00_REPORT.md](docs/phase-reports/PHASE_00_REPORT.md) |
-| **01** | C++ toolchain & OpenVINO GenAI environment configuration | NOT_STARTED | --- |
+| **00** | Workspace audit, Git repository isolation, and contract setup | **COMPLETE** | [PHASE_00_REPORT.md](docs/phase-reports/PHASE_00_REPORT.md) |
+| **01** | C++ toolchain & OpenVINO GenAI environment configuration | **IN_PROGRESS** | [PHASE_01_REPORT.md](docs/phase-reports/PHASE_01_REPORT.md) |
 | **02** | Model selection, download, and OpenVINO conversion | NOT_STARTED | --- |
 | **03** | Local C++ inference engine (`ov::genai::LLMPipeline`) | NOT_STARTED | --- |
 | **04** | Chat sessions & generation controls | NOT_STARTED | --- |
@@ -98,3 +99,4 @@ See [docs/PHASE_STATUS.md](docs/PHASE_STATUS.md) for live gate status.
 - **Local Execution:** 100% of LLM inference is processed locally on the device.
 - **Zero Cloud API Calls:** No remote LLM services, external inference proxies, or unauthorized telemetry are utilized.
 - **Asset Protection:** Model weights, caches, build artifacts, and secrets are excluded from version control via `.gitignore`.
+
