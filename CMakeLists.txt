@@ -36,6 +36,10 @@ target_link_libraries(env_check PRIVATE ov_llm_core)
 add_executable(llm_inference src/main.cpp)
 target_link_libraries(llm_inference PRIVATE ov_llm_core)
 
+# Phase 05 Target: KV Cache Scaling Benchmark
+add_executable(benchmark_kv src/benchmark_kv.cpp)
+target_link_libraries(benchmark_kv PRIVATE ov_llm_core psapi)
+
 # Automated Tests
 enable_testing()
 

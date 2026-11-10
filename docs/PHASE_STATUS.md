@@ -25,7 +25,7 @@
 | **02 --- Model preparation** | COMPLETE | PASS | 9d07590 | YES | YES |
 | **03 --- Local inference** | COMPLETE | PASS | f508c2f | YES | YES |
 | **04 --- Chat sessions** | COMPLETE | PASS | 51260d2 | YES | YES |
-| **05 --- KV cache** | IN_PROGRESS | --- | --- | --- | --- |
+| **05 --- KV cache** | READY_FOR_REVIEW | PASS | PENDING | PENDING | PENDING |
 | **06 --- Quantization** | NOT_STARTED | --- | --- | --- | --- |
 | **07 --- Benchmarking** | NOT_STARTED | --- | --- | --- | --- |
 | **08 --- Optional UI** | NOT_STARTED | --- | --- | --- | --- |
@@ -40,4 +40,4 @@
 - **2026-11-11:** Phase 02 completed. TinyLlama-1.1B-Chat-v1.0 exported to OpenVINO IR in both FP16 baseline (2.10 GB) and INT4 compressed (613 MB) variants. Asset integrity validated, Git hygiene verified, push verified on GitHub, user approved. Status: `COMPLETE`.
 - **2026-11-11:** Phase 03 completed. `LLMEngine` wrapper around `ov::genai::LLMPipeline`, interactive CLI loop, and 9/9 C++ smoke tests passing. Local tests PASS, push verified on GitHub, user approved. Status: `COMPLETE`.
 - **2026-11-11:** Phase 04 completed. `ChatSession` abstraction, `ov::genai::ChatHistory` multi-turn context retention, `/reset` isolation, sampling parameters validation, and full CTest suite passing (100%). Push verified on GitHub, user approved. Status: `COMPLETE`.
-- **2026-11-11:** Phase 05 initiated. KV cache understanding and controlled experiment in progress. Status: `IN_PROGRESS`.
+- **2026-11-11:** Phase 05 completed implementation and testing. `docs/KV_CACHE.md` authored, `benchmark_kv.cpp` implemented and executed across 128, 512, 1024, and 2048 token contexts on INT4 and FP16 models. Local tests PASS, Phase 05 report authored. Status: `READY_FOR_REVIEW`.
