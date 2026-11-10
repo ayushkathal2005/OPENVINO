@@ -11,10 +11,12 @@ find_package(OpenVINO REQUIRED COMPONENTS Runtime)
 # Find OpenVINO GenAI
 find_package(OpenVINOGenAI REQUIRED)
 
-# Common library for LLM Engine
+# Common library for LLM Engine and Chat Session
 add_library(ov_llm_core STATIC
     src/llm_engine.cpp
     src/llm_engine.hpp
+    src/chat_session.cpp
+    src/chat_session.hpp
 )
 
 target_include_directories(ov_llm_core PUBLIC
@@ -30,10 +32,21 @@ target_link_libraries(ov_llm_core PUBLIC
 add_executable(env_check src/main.cpp)
 target_link_libraries(env_check PRIVATE ov_llm_core)
 
-# Phase 03 Target: Main Local LLM Inference Application
+# Phase 03/04 Target: Main Local LLM Inference Application
 add_executable(llm_inference src/main.cpp)
 target_link_libraries(llm_inference PRIVATE ov_llm_core)
+
+# Automated Tests
+enable_testing()
 
 # Phase 03 Target: Smoke & Unit Tests
 add_executable(test_smoke_inference tests/test_smoke_inference.cpp)
 target_link_libraries(test_smoke_inference PRIVATE ov_llm_core)
+add_test(NAME test_smoke_inference COMMAND test_smoke_inference)
+set_tests_properties(test_smoke_inference PROPERTIES WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+
+# Phase 04 Target: Chat Session & Generation Controls Tests
+add_executable(test_chat_session tests/test_chat_session.cpp)
+target_link_libraries(test_chat_session PRIVATE ov_llm_core)
+add_test(NAME test_chat_session COMMAND test_chat_session)
+set_tests_properties(test_chat_session PROPERTIES WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")

@@ -76,6 +76,30 @@ bool LLMEngine::validate_device(const std::string& device, std::string& error_ms
     }
 }
 
+bool LLMEngine::validate_params(const GenerationParameters& params, std::string& error_msg) {
+    if (params.max_new_tokens == 0) {
+        error_msg = "max_new_tokens must be greater than 0.";
+        return false;
+    }
+
+    if (params.temperature < 0.0f) {
+        error_msg = "temperature must be non-negative (>= 0.0).";
+        return false;
+    }
+
+    if (params.top_p <= 0.0f || params.top_p > 1.0f) {
+        error_msg = "top_p must be within the range (0.0, 1.0].";
+        return false;
+    }
+
+    if (params.repetition_penalty <= 0.0f) {
+        error_msg = "repetition_penalty must be positive (> 0.0).";
+        return false;
+    }
+
+    return true;
+}
+
 bool LLMEngine::load_model(const std::string& model_path, const std::string& device) {
     std::string err;
     if (!validate_model_path(model_path, err)) {
@@ -102,6 +126,23 @@ bool LLMEngine::load_model(const std::string& model_path, const std::string& dev
     }
 }
 
+ov::genai::Tokenizer LLMEngine::get_tokenizer() const {
+    if (!is_loaded()) {
+        throw std::runtime_error("Cannot get tokenizer: No model is loaded.");
+    }
+    return m_pipeline->get_tokenizer();
+}
+
+std::string LLMEngine::apply_chat_template(
+    const ov::genai::ChatHistory& history,
+    bool add_generation_prompt
+) const {
+    if (!is_loaded()) {
+        throw std::runtime_error("Cannot apply chat template: No model is loaded.");
+    }
+    return m_pipeline->get_tokenizer().apply_chat_template(history, add_generation_prompt);
+}
+
 std::string LLMEngine::generate(
     const std::string& prompt,
     const GenerationParameters& params,
@@ -117,12 +158,22 @@ std::string LLMEngine::generate(
         return "";
     }
 
+    std::string err;
+    if (!validate_params(params, err)) {
+        std::cerr << "[LLMEngine Error] Invalid generation parameters: " << err << std::endl;
+        return "";
+    }
+
     try {
         ov::genai::GenerationConfig config;
         config.max_new_tokens = params.max_new_tokens;
         config.temperature = params.temperature;
         config.top_p = params.top_p;
+        config.repetition_penalty = params.repetition_penalty;
         config.do_sample = params.do_sample;
+        if (params.rng_seed != 0) {
+            config.rng_seed = params.rng_seed;
+        }
 
         if (streamer != nullptr) {
             auto ov_streamer = [&streamer](std::string token) {
@@ -139,5 +190,51 @@ std::string LLMEngine::generate(
     }
 }
 
-} // namespace ov_llm
+std::string LLMEngine::generate(
+    const ov::genai::ChatHistory& history,
+    const GenerationParameters& params,
+    std::function<bool(const std::string&)> streamer
+) {
+    if (!is_loaded()) {
+        std::cerr << "[LLMEngine Error] No model is loaded." << std::endl;
+        return "";
+    }
 
+    if (history.empty()) {
+        std::cerr << "[LLMEngine Warning] ChatHistory is empty." << std::endl;
+        return "";
+    }
+
+    std::string err;
+    if (!validate_params(params, err)) {
+        std::cerr << "[LLMEngine Error] Invalid generation parameters: " << err << std::endl;
+        return "";
+    }
+
+    try {
+        ov::genai::GenerationConfig config;
+        config.max_new_tokens = params.max_new_tokens;
+        config.temperature = params.temperature;
+        config.top_p = params.top_p;
+        config.repetition_penalty = params.repetition_penalty;
+        config.do_sample = params.do_sample;
+        if (params.rng_seed != 0) {
+            config.rng_seed = params.rng_seed;
+        }
+
+        if (streamer != nullptr) {
+            auto ov_streamer = [&streamer](std::string token) {
+                bool keep_running = streamer(token);
+                return keep_running ? ov::genai::StreamingStatus::RUNNING : ov::genai::StreamingStatus::STOP;
+            };
+            return m_pipeline->generate(history, config, ov_streamer);
+        } else {
+            return m_pipeline->generate(history, config);
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "[LLMEngine Error] Chat generation failed: " << e.what() << std::endl;
+        return "";
+    }
+}
+
+} // namespace ov_llm
