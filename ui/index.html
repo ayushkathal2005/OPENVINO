@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenVINO Local LLM Workbench</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #475569;
+      --success: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg-primary); color: var(--text-main); display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    header { background-color: var(--bg-secondary); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand h1 { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.02em; }
+    .badge { background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.75rem; padding: 4px 8px; border-radius: 9999px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
+    .badge-dot { width: 6px; height: 6px; background-color: var(--success); border-radius: 50%; }
+    .tabs { display: flex; gap: 8px; }
+    .tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; }
+    .tab-btn.active { background: var(--bg-tertiary); color: var(--text-main); }
+    .tab-btn:hover:not(.active) { color: var(--text-main); }
+    
+    .workspace { display: flex; flex: 1; overflow: hidden; }
+    .sidebar { width: 320px; background-color: var(--bg-secondary); border-right: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 18px; overflow-y: auto; }
+    .sidebar h2 { font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 4px; }
+    .control-group { display: flex; flex-direction: column; gap: 6px; }
+    .control-group label { font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between; }
+    select, input[type="text"], textarea { background-color: var(--bg-primary); border: 1px solid var(--border); color: var(--text-main); padding: 8px 10px; border-radius: 6px; font-size: 0.875rem; outline: none; }
+    select:focus, input[type="text"]:focus, textarea:focus { border-color: var(--accent); }
+    input[type="range"] { accent-color: var(--accent); }
+    .btn-reset { background-color: transparent; border: 1px solid #ef4444; color: #ef4444; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 0.85rem; transition: background 0.2s; }
+    .btn-reset:hover { background-color: rgba(239, 68, 68, 0.1); }
+    
+    .main-panel { flex: 1; display: flex; flex-direction: column; background-color: var(--bg-primary); overflow: hidden; }
+    .tab-content { flex: 1; display: none; flex-direction: column; height: 100%; overflow: hidden; }
+    .tab-content.active { display: flex; }
+
+    /* Chat Tab */
+    .chat-messages { flex: 1; padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+    .msg { max-width: 80%; padding: 12px 16px; border-radius: 8px; font-size: 0.9rem; line-height: 1.5; word-break: break-word; }
+    .msg.user { align-self: flex-end; background-color: #2563eb; color: #fff; }
+    .msg.assistant { align-self: flex-start; background-color: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-main); }
+    .msg-meta { font-size: 0.7rem; color: var(--text-muted); margin-top: 6px; display: flex; gap: 10px; }
+    .chat-input-area { padding: 16px 24px; background-color: var(--bg-secondary); border-top: 1px solid var(--border); display: flex; gap: 12px; }
+    .chat-input-area input { flex: 1; padding: 12px 16px; font-size: 0.95rem; }
+    .btn-send { background-color: var(--accent); color: #0f172a; border: none; padding: 0 24px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    .btn-send:hover { background-color: var(--accent-hover); }
+    .btn-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Telemetry Tab */
+    .telemetry-view { padding: 24px; overflow-y: auto; height: 100%; display: flex; flex-direction: column; gap: 20px; }
+    .stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .stat-card { background-color: var(--bg-secondary); border: 1px solid var(--border); padding: 16px; border-radius: 8px; }
+    .stat-card .label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
+    .stat-card .value { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-top: 4px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; background: var(--bg-secondary); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+    th, td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    th { background-color: var(--bg-tertiary); color: var(--text-muted); font-weight: 600; }
+    tr:last-child td { border-bottom: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>OpenVINO Local LLM Workbench</h1>
+      <span class="badge"><span class="badge-dot"></span> 100% Offline C++ Engine</span>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('chat')">Live Chat</button>
+      <button class="tab-btn" onclick="switchTab('telemetry')">Benchmark Telemetry</button>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <!-- Sidebar Controls -->
+    <aside class="sidebar">
+      <h2>Inference Controls</h2>
+      <div class="control-group">
+        <label>Model Architecture</label>
+        <select id="model-select">
+          <option value="models/tinyllama-1.1b-chat-int4" selected>TinyLlama 1.1B (INT4 Quantized)</option>
+          <option value="models/tinyllama-1.1b-chat-fp16">TinyLlama 1.1B (FP16 Baseline)</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Target Hardware</label>
+        <select id="device-select">
+          <option value="CPU" selected>CPU (Intel Core i7-12700H)</option>
+          <option value="GPU.0">GPU.0 (Intel Iris Xe Graphics)</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Max New Tokens <span id="val-tokens">64</span></label>
+        <input type="range" id="slider-tokens" min="16" max="256" step="16" value="64" oninput="document.getElementById('val-tokens').innerText = this.value">
+      </div>
+      <div class="control-group">
+        <label>Temperature <span id="val-temp">0.7</span></label>
+        <input type="range" id="slider-temp" min="0.0" max="1.5" step="0.1" value="0.7" oninput="document.getElementById('val-temp').innerText = this.value">
+      </div>
+      <div class="control-group">
+        <label>Top-P <span id="val-topp">0.9</span></label>
+        <input type="range" id="slider-topp" min="0.1" max="1.0" step="0.05" value="0.9" oninput="document.getElementById('val-topp').innerText = this.value">
+      </div>
+      <div class="control-group">
+        <label style="cursor: pointer;"><input type="checkbox" id="chk-deterministic"> Deterministic (Greedy)</label>
+      </div>
+      <div class="control-group">
+        <label>System Instruction</label>
+        <textarea id="sys-prompt" rows="3">You are a concise, respectful, and helpful local AI assistant.</textarea>
+      </div>
+      <button class="btn-reset" onclick="resetChat()">Reset Session History</button>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="main-panel">
+      <!-- Chat Interface Tab -->
+      <section id="tab-chat" class="tab-content active">
+        <div class="chat-messages" id="chat-messages">
+          <div class="msg assistant">
+            Hello! I am TinyLlama running locally via OpenVINO GenAI C++ pipeline. Ask me anything to test local inference.
+            <div class="msg-meta"><span>Device: CPU</span><span>Model: INT4</span></div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" id="user-input" placeholder="Enter prompt..." onkeydown="if(event.key === 'Enter') sendMessage()">
+          <button class="btn-send" id="btn-send" onclick="sendMessage()">Send</button>
+        </div>
+      </section>
+
+      <!-- Telemetry Tab -->
+      <section id="tab-telemetry" class="tab-content">
+        <div class="telemetry-view">
+          <div class="stat-cards">
+            <div class="stat-card">
+              <div class="label">Peak Measured Throughput</div>
+              <div class="value">47.4 tok/s</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Lowest Warm TTFT</div>
+              <div class="value">23.2 ms</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">INT4 RAM Reduction</div>
+              <div class="value">-70.1%</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Storage Footprint Saved</div>
+              <div class="value">1,492 MB</div>
+            </div>
+          </div>
+          <div>
+            <h2 style="font-size: 1rem; margin-bottom: 12px; color: var(--text-muted);">Verified Benchmark Runs (from benchmarks/results/benchmark_results.csv)</h2>
+            <div style="overflow-x: auto;">
+              <table id="benchmark-table">
+                <thead>
+                  <tr>
+                    <th>Config</th>
+                    <th>Device</th>
+                    <th>Prompt ID</th>
+                    <th>Rep</th>
+                    <th>TTFT (ms)</th>
+                    <th>TPOT (ms/tok)</th>
+                    <th>Throughput (t/s)</th>
+                    <th>Peak RAM (MB)</th>
+                  </tr>
+                </thead>
+                <tbody id="benchmark-rows">
+                  <tr><td colspan="8" style="text-align: center; color: var(--text-muted);">Loading benchmark dataset...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function switchTab(name) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      if (name === 'chat') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('tab-chat').classList.add('active');
+      } else {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('tab-telemetry').classList.add('active');
+        loadBenchmarks();
+      }
+    }
+
+    function resetChat() {
+      const chat = document.getElementById('chat-messages');
+      chat.innerHTML = `
+        <div class="msg assistant">
+          Session reset. Conversation history cleared.
+          <div class="msg-meta"><span>Status: Fresh Session</span></div>
+        </div>
+      `;
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('user-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const btn = document.getElementById('btn-send');
+      const chat = document.getElementById('chat-messages');
+
+      // Append user bubble
+      const userDiv = document.createElement('div');
+      userDiv.className = 'msg user';
+      userDiv.innerText = text;
+      chat.appendChild(userDiv);
+
+      input.value = '';
+      btn.disabled = true;
+
+      // Append thinking indicator
+      const asstDiv = document.createElement('div');
+      asstDiv.className = 'msg assistant';
+      asstDiv.innerText = 'Evaluating locally in OpenVINO C++...';
+      chat.appendChild(asstDiv);
+      chat.scrollTop = chat.scrollHeight;
+
+      const payload = {
+        prompt: text,
+        model_path: document.getElementById('model-select').value,
+        device: document.getElementById('device-select').value,
+        max_tokens: parseInt(document.getElementById('slider-tokens').value),
+        temperature: parseFloat(document.getElementById('slider-temp').value),
+        top_p: parseFloat(document.getElementById('slider-topp').value),
+        deterministic: document.getElementById('chk-deterministic').checked
+      };
+
+      try {
+        const resp = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await resp.json();
+
+        if (data.status === 'success') {
+          asstDiv.innerText = data.response;
+          const meta = document.createElement('div');
+          meta.className = 'msg-meta';
+          meta.innerHTML = `<span>Device: ${data.device}</span><span>Elapsed: ${data.elapsed_ms} ms</span><span>Backend: ${data.backend}</span>`;
+          asstDiv.appendChild(meta);
+        } else {
+          asstDiv.innerText = 'Error: ' + (data.error || 'Inference failed');
+          asstDiv.style.color = '#ef4444';
+        }
+      } catch (err) {
+        asstDiv.innerText = 'Network error communicating with local bridge server: ' + err.message;
+        asstDiv.style.color = '#ef4444';
+      } finally {
+        btn.disabled = false;
+        chat.scrollTop = chat.scrollHeight;
+      }
+    }
+
+    async function loadBenchmarks() {
+      const tbody = document.getElementById('benchmark-rows');
+      try {
+        const resp = await fetch('/api/benchmarks');
+        const data = await resp.json();
+        if (data.records && data.records.length > 0) {
+          tbody.innerHTML = data.records.map(r => `
+            <tr>
+              <td><strong>${r.config}</strong></td>
+              <td>${r.device}</td>
+              <td>${r.prompt_id}</td>
+              <td>#${r.repetition}</td>
+              <td>${parseFloat(r.ttft_ms).toFixed(1)}</td>
+              <td>${parseFloat(r.tpot_ms).toFixed(1)}</td>
+              <td>${parseFloat(r.throughput_tps).toFixed(1)}</td>
+              <td>${parseFloat(r.peak_ram_mb).toFixed(1)}</td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="8" style="color: #ef4444;">Failed to load benchmark results: ${e.message}</td></tr>`;
+      }
+    }
+  </script>
+</body>
+</html>
