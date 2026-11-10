@@ -256,7 +256,7 @@ Open **[http://127.0.0.1:8080](http://127.0.0.1:8080)** to access the live local
 | **06** | Quantization & Quality Comparison | PASS | **COMPLETE** | `9f809b0` | [PHASE_06_REPORT.md](docs/phase-reports/PHASE_06_REPORT.md) |
 | **07** | Benchmarking & Resource Profiling | PASS | **COMPLETE** | `fe41ddf` | [PHASE_07_REPORT.md](docs/phase-reports/PHASE_07_REPORT.md) |
 | **08** | Optional Local UI Dashboard | PASS | **COMPLETE** | `a357d7e` | [PHASE_08_REPORT.md](docs/phase-reports/PHASE_08_REPORT.md) |
-| **09** | Final Hardening & Submission Package | PASS | **COMPLETE** | `18ce3d8` | [PHASE_09_REPORT.md](docs/phase-reports/PHASE_09_REPORT.md) |
+| **09** | Final Hardening & Submission Package | PASS | **COMPLETE** | `26bea29` | [PHASE_09_REPORT.md](docs/phase-reports/PHASE_09_REPORT.md) |
 
 *Full phase gating records: [docs/PHASE_STATUS.md](docs/PHASE_STATUS.md).*
 
