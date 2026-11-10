@@ -26,7 +26,7 @@
 | **03 --- Local inference** | COMPLETE | PASS | f508c2f | YES | YES |
 | **04 --- Chat sessions** | COMPLETE | PASS | 51260d2 | YES | YES |
 | **05 --- KV cache** | COMPLETE | PASS | 332fb2e | YES | YES |
-| **06 --- Quantization** | READY_FOR_REVIEW | PASS | PENDING | PENDING | PENDING |
+| **06 --- Quantization** | READY_FOR_REVIEW | PASS | 28aae79 | YES | PENDING |
 | **07 --- Benchmarking** | NOT_STARTED | --- | --- | --- | --- |
 | **08 --- Optional UI** | NOT_STARTED | --- | --- | --- | --- |
 | **09 --- Final submission** | NOT_STARTED | --- | --- | --- | --- |
