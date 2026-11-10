@@ -28,7 +28,7 @@
 | **05 --- KV cache** | COMPLETE | PASS | 332fb2e | YES | YES |
 | **06 --- Quantization** | COMPLETE | PASS | 9f809b0 | YES | YES |
 | **07 --- Benchmarking** | COMPLETE | PASS | fe41ddf | YES | YES |
-| **08 --- Optional UI** | READY_FOR_REVIEW | PASS | PENDING | PENDING | PENDING |
+| **08 --- Optional UI** | READY_FOR_REVIEW | PASS | 3894a1b | YES | PENDING |
 | **09 --- Final submission** | NOT_STARTED | --- | --- | --- | --- |
 
 ---
