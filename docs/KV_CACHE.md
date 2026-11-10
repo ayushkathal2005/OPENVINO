@@ -172,3 +172,4 @@ A dedicated C++ benchmark harness (`src/benchmark_kv.cpp`) was compiled in Relea
 
 - **NPU Device Target:** The tested 12th Gen Intel Core i7-12700H does not feature an integrated Intel NPU (NPU is introduced in Intel Core Ultra / Meteor Lake). Attempting to target `NPU` fails validation.
 - **KV Cache Quantization on CPU:** While weight quantization (INT4) is fully accelerated by the CPU plugin via AVX2 / AVX-512 VNNI, dynamic KV cache quantization (e.g. 4-bit KV cache) is not enabled by default for high-level CPU inference without explicit continuous batching scheduler properties.
+

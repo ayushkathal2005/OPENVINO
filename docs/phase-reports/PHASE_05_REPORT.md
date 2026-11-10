@@ -2,7 +2,7 @@
 
 ```text
 Phase: 05 --- KV cache
-Status: READY_FOR_REVIEW
+Status: COMPLETE
 Start date: 2026-11-11
 Completion date: 2026-11-11
 Environment: Windows 11 Home (Build 10.0.26300), Intel Core i7-12700H, MSVC v143 (19.44.35222 x64), CMake 4.4.4, OpenVINO GenAI 2026.4.1.0 C++ API
@@ -91,3 +91,4 @@ Target Ctx    Input Tokens  New Tokens  TTFT (ms)     TPOT (ms/tok)   Throughput
 - [x] Any cache limit/eviction/quantization feature is used only if verified in the installed API.
 - [x] Unsupported features are explicitly identified (NPU target, unconfigured dynamic KV cache quantization).
 - [x] No fabricated cache measurements or unsupported claims appear in the report.
+
