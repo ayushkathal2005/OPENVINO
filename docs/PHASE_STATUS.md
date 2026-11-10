@@ -29,7 +29,7 @@
 | **06 --- Quantization** | COMPLETE | PASS | 9f809b0 | YES | YES |
 | **07 --- Benchmarking** | COMPLETE | PASS | fe41ddf | YES | YES |
 | **08 --- Optional UI** | COMPLETE | PASS | a357d7e | YES | YES |
-| **09 --- Final submission** | READY_FOR_REVIEW | PASS | PENDING | PENDING | PENDING |
+| **09 --- Final submission** | READY_FOR_REVIEW | PASS | 9b7c632 | YES | PENDING |
 
 ---
 
