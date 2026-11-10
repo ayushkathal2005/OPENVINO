@@ -10,6 +10,7 @@ obj/
 # Downloaded models and model caches
 models/*
 !models/README.md
+raw_models/
 *.bin
 *.safetensors
 *.onnx
@@ -46,4 +47,5 @@ Thumbs.db
 
 # Archive / local zip submissions
 *.zip
+SWFW_5S_13_Submission/
 
