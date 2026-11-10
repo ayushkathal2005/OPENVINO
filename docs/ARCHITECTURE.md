@@ -161,3 +161,4 @@ sequenceDiagram
 - **Client Dashboard (`ui/index.html`):**
   - Pure client-side HTML5/CSS/JavaScript with zero external CDN dependencies.
   - Slices live metrics and parses benchmark CSV records.
+
