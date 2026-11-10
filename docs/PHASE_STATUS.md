@@ -28,8 +28,8 @@
 | **05 --- KV cache** | COMPLETE | PASS | 332fb2e | YES | YES |
 | **06 --- Quantization** | COMPLETE | PASS | 9f809b0 | YES | YES |
 | **07 --- Benchmarking** | COMPLETE | PASS | fe41ddf | YES | YES |
-| **08 --- Optional UI** | READY_FOR_REVIEW | PASS | 3894a1b | YES | PENDING |
-| **09 --- Final submission** | NOT_STARTED | --- | --- | --- | --- |
+| **08 --- Optional UI** | COMPLETE | PASS | bcf35b1 | YES | YES |
+| **09 --- Final submission** | IN_PROGRESS | --- | --- | --- | --- |
 
 ---
 
@@ -43,4 +43,5 @@
 - **2026-11-11:** Phase 05 completed. `docs/KV_CACHE.md` authored, `benchmark_kv.cpp` implemented and executed across 128, 512, 1024, and 2048 token contexts on INT4 and FP16 models. Local tests PASS, push verified on GitHub, user approved. Status: `COMPLETE`.
 - **2026-11-11:** Phase 06 completed. `benchmark_quantization.cpp` implemented and executed across all 4 benchmark tasks on INT4 and FP16 models. `docs/QUANTIZATION.md` authored, quality rubric evaluated, 70% RAM reduction and 2.7x speedup verified. Push verified on GitHub, user approved. Status: `COMPLETE`.
 - **2026-11-11:** Phase 07 completed. `benchmark_suite.cpp` implemented and executed across CPU INT4, CPU FP16, and GPU.0 INT4 configurations (60 runs total). `benchmarks/results/benchmark_results.csv` generated, `docs/BENCHMARK_METHODOLOGY.md` authored, statistical means and standard deviations computed. Push verified on GitHub, user approved. Status: `COMPLETE`.
-- **2026-11-11:** Phase 08 completed implementation and testing. `ui/server.py` implemented with strict `127.0.0.1` binding and local C++ subprocess execution, `ui/index.html` modern interface created, `tests/test_ui_server.py` passing (5/5). Phase 08 report authored. Status: `READY_FOR_REVIEW`.
+- **2026-11-11:** Phase 08 completed. `ui/server.py` implemented with strict `127.0.0.1` binding and local C++ subprocess execution, `ui/index.html` modern interface created, `tests/test_ui_server.py` passing (5/5). Push verified on GitHub, user approved. Status: `COMPLETE`.
+- **2026-11-11:** Phase 09 initiated. Final hardening, documentation, and submission package in progress. Status: `IN_PROGRESS`.
