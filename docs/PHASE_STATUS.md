@@ -24,7 +24,7 @@
 | **01 --- C++ environment** | COMPLETE | PASS | 8b871fe | YES | YES |
 | **02 --- Model preparation** | COMPLETE | PASS | 9d07590 | YES | YES |
 | **03 --- Local inference** | COMPLETE | PASS | f508c2f | YES | YES |
-| **04 --- Chat sessions** | COMPLETE | PASS | 314fba8 | YES | YES |
+| **04 --- Chat sessions** | COMPLETE | PASS | 51260d2 | YES | YES |
 | **05 --- KV cache** | IN_PROGRESS | --- | --- | --- | --- |
 | **06 --- Quantization** | NOT_STARTED | --- | --- | --- | --- |
 | **07 --- Benchmarking** | NOT_STARTED | --- | --- | --- | --- |
