@@ -27,7 +27,7 @@
 | **04 --- Chat sessions** | COMPLETE | PASS | 51260d2 | YES | YES |
 | **05 --- KV cache** | COMPLETE | PASS | 332fb2e | YES | YES |
 | **06 --- Quantization** | COMPLETE | PASS | 9f809b0 | YES | YES |
-| **07 --- Benchmarking** | COMPLETE | PASS | 287bb8e | YES | YES |
+| **07 --- Benchmarking** | COMPLETE | PASS | fe41ddf | YES | YES |
 | **08 --- Optional UI** | IN_PROGRESS | --- | --- | --- | --- |
 | **09 --- Final submission** | NOT_STARTED | --- | --- | --- | --- |
 
