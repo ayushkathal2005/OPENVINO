@@ -192,3 +192,4 @@ FP16 (Baseline)     reason_01   48          96          330.77        56.03     
 
 3. **Recommendation for Edge Deployment:**  
    The INT4 variant is unconditionally superior for CPU deployment in this workbench: it consumes 70% less RAM, runs nearly 3x faster, and exhibits identical linguistic quality to the FP16 baseline.
+
