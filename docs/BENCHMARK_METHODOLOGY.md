@@ -99,3 +99,4 @@ $env:PATH = "C:\openvino_genai\openvino_genai_windows_2026.4.1.0_x86_64\runtime\
 .\build\Release\benchmark_suite.exe 5
 ```
 Results will print to console and save automatically to `benchmarks/results/benchmark_results.csv`.
+
