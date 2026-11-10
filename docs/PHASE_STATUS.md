@@ -21,7 +21,7 @@
 | Phase | Status | Local tests | Commit | Remote verified | User approval |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **00 --- Workspace audit** | COMPLETE | PASS | b50a3b5 | YES | YES |
-| **01 --- C++ environment** | READY_FOR_REVIEW | PASS | PENDING | PENDING | PENDING |
+| **01 --- C++ environment** | READY_FOR_REVIEW | PASS | 8b871fe | YES | PENDING |
 | **02 --- Model preparation** | NOT_STARTED | --- | --- | --- | --- |
 | **03 --- Local inference** | NOT_STARTED | --- | --- | --- | --- |
 | **04 --- Chat sessions** | NOT_STARTED | --- | --- | --- | --- |
