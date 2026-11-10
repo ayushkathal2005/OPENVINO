@@ -1,0 +1,22 @@
+[
+  {
+    "id": "fact_01",
+    "category": "factual_explanation",
+    "prompt": "Explain the concept of Key-Value (KV) caching in large language models and why it optimizes autoregressive generation."
+  },
+  {
+    "id": "summ_01",
+    "category": "summarization",
+    "prompt": "Summarize the primary benefits and potential accuracy trade-offs of INT4 weight quantization for edge AI inference."
+  },
+  {
+    "id": "instruct_01",
+    "category": "instruction_following",
+    "prompt": "List exactly three advantages of deploying LLMs locally using OpenVINO GenAI C++ API instead of remote cloud APIs. Format as a numbered list."
+  },
+  {
+    "id": "reason_01",
+    "category": "simple_reasoning",
+    "prompt": "If a language model processes 20 tokens per second, how many seconds will it take to generate a 120-token response? Show your calculation."
+  }
+]

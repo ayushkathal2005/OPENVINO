@@ -1,0 +1,47 @@
+# Build output
+build/
+cmake-build-*/
+out/
+Debug/
+Release/
+bin/
+obj/
+
+# Downloaded models and model caches
+models/*
+!models/README.md
+*.bin
+*.safetensors
+*.onnx
+*.gguf
+*.blob
+*.xml
+
+# Python virtual environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Secrets and local settings
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Logs and temporary output
+*.log
+*.tmp
+
+# Archive / local zip submissions
+*.zip
