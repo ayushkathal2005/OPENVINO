@@ -40,6 +40,10 @@ target_link_libraries(llm_inference PRIVATE ov_llm_core)
 add_executable(benchmark_kv src/benchmark_kv.cpp)
 target_link_libraries(benchmark_kv PRIVATE ov_llm_core psapi)
 
+# Phase 06 Target: Quantization Comparison Benchmark
+add_executable(benchmark_quantization src/benchmark_quantization.cpp)
+target_link_libraries(benchmark_quantization PRIVATE ov_llm_core psapi)
+
 # Automated Tests
 enable_testing()
 
