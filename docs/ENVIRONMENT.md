@@ -39,13 +39,15 @@
 
 | Tool | Detected Version | Location / Source | Phase Action Required |
 | :--- | :--- | :--- | :--- |
-| **Git** | `2.45.1.windows.1` | `C:\Program Files\Git\cmd\git.exe` | Functional; initialized repository in workspace root |
-| **GitHub CLI (`gh`)** | Authenticated as `ayushkathal2005` | `C:\Program Files\GitHub CLI\gh.exe` | Functional; verified repo access to `ayushkathal2005/OPENVINO` |
-| **CMake** | Not on system PATH | N/A | Install / configure in Phase 1 |
-| **C++ Compiler (MSVC)** | VS 2022 BuildTools present | `C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools` | Configure 64-bit MSVC environment (`vcvars64.bat`) in Phase 1 |
-| **Legacy Compiler (MinGW)** | GCC 6.3.0 (32-bit, 2016) | `C:\MinGW\bin\g++.exe` | **Incompatible** with OpenVINO C++17; will not be used |
-| **System Python** | `3.14.0` | System PATH | Pre-built wheels for AI packages require Python 3.10–3.12; configure dedicated venv in Phase 2 |
-| **OpenVINO C++ SDK** | Not installed | N/A | Install OpenVINO C++ runtime & GenAI headers in Phase 1 |
+| **Git** | `2.45.1.windows.1` | `C:\Program Files\Git\cmd\git.exe` | Verified; active repository |
+| **GitHub CLI (`gh`)** | Authenticated (`ayushkathal2005`) | `C:\Program Files\GitHub CLI\gh.exe` | Verified; repo `ayushkathal2005/OPENVINO` synced |
+| **CMake** | `4.4.4` (x86_64) | `C:\Program Files\CMake\bin\cmake.exe` | Installed & verified in Phase 01 |
+| **C++ Compiler (MSVC)** | MSVC `19.44.35222` (x64) | `C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe` | Installed & verified in Phase 01 |
+| **Windows SDK** | `10.0.26100.0` | `C:\Program Files (x86)\Windows Kits\10` | Installed & verified in Phase 01 |
+| **OpenVINO Runtime** | `2026.4.1-22982-e213a147257-releases/2026/4` | `C:\openvino_genai\openvino_genai_windows_2026.4.1.0_x86_64\runtime` | Installed & verified in Phase 01 |
+| **OpenVINO GenAI C++** | `2026.4.1.0` | `C:\openvino_genai\openvino_genai_windows_2026.4.1.0_x86_64` | Installed & verified in Phase 01 |
+| **Intel oneTBB** | `tbb12.dll` | `C:\openvino_genai\openvino_genai_windows_2026.4.1.0_x86_64\runtime\3rdparty\tbb\bin` | Verified in Phase 01 |
+| **System Python** | `3.14.0` | System PATH | Model preparation tools in Phase 02 will run in dedicated venv |
 
 ---
 
